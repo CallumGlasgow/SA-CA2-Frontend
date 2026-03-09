@@ -1,0 +1,10 @@
+download android studio: https://developer.android.com/studio
+
+open android studio -> open
+
+navigate to 
+	New folder/app/src/main/java/com/example/sa_ca2_frontend/MainActivity.kt
+
+run on emulator at top, very slow 
+
+can use preview for quick UI visuals
