@@ -1,0 +1,74 @@
+package com.example.sa_ca2_frontend.navBar
+
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+//import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.automirrored.filled.List
+
+@Composable
+fun BottomNavBar(
+    // Icon list: https://fonts.google.com/icons
+
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit,
+    containerColor: Color = Color.LightGray
+) {
+    NavigationBar (containerColor = containerColor) {
+        NavigationBarItem(
+            selected = selectedTab == 0,
+            onClick = { onTabSelected(0) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Home,
+                    contentDescription = "Home"
+                )
+            },
+            label = { Text("Home") }
+        )
+
+        NavigationBarItem(
+            selected = selectedTab == 1,
+            onClick = { onTabSelected(1) },
+            icon = {
+                Icon(
+//                    imageVector = Icons.Default.List,
+                    imageVector = Icons.AutoMirrored.Filled.List,
+                    contentDescription = "Teams"
+                )
+            },
+            label = { Text("Teams") }
+        )
+
+        NavigationBarItem(
+            selected = selectedTab == 2,
+            onClick = { onTabSelected(2) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "com/example/sa_ca2_frontend/Search"
+                )
+            },
+            label = { Text("Search") }
+        )
+
+        NavigationBarItem(
+            selected = selectedTab == 3,
+            onClick = { onTabSelected(3) },
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Settings,
+                    contentDescription = "Settings"
+                )
+            },
+            label = { Text("Settings") }
+        )
+    }
+}
