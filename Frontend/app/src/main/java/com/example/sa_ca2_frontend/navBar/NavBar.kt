@@ -2,8 +2,7 @@ package com.example.sa_ca2_frontend.navBar
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
-//import androidx.compose.material.icons.filled.List
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
@@ -16,7 +15,6 @@ import androidx.compose.material.icons.automirrored.filled.List
 @Composable
 fun BottomNavBar(
     // Icon list: https://fonts.google.com/icons
-
     selectedTab: Int,
     onTabSelected: (Int) -> Unit,
     containerColor: Color = Color.LightGray
@@ -39,12 +37,11 @@ fun BottomNavBar(
             onClick = { onTabSelected(1) },
             icon = {
                 Icon(
-//                    imageVector = Icons.Default.List,
                     imageVector = Icons.AutoMirrored.Filled.List,
-                    contentDescription = "Teams"
+                    contentDescription = "Teams leaderboard"
                 )
             },
-            label = { Text("Teams") }
+            label = { Text("Leaderboard") }
         )
 
         NavigationBarItem(
@@ -52,11 +49,11 @@ fun BottomNavBar(
             onClick = { onTabSelected(2) },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "com/example/sa_ca2_frontend/Search"
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = "Fixtures"
                 )
             },
-            label = { Text("Search") }
+            label = { Text("Fixtures") }
         )
 
         NavigationBarItem(

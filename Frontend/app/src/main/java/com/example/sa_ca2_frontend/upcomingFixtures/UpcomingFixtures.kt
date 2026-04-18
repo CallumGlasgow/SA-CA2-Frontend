@@ -1,20 +1,9 @@
-package com.example.sa_ca2_frontend.homePage
+package com.example.sa_ca2_frontend.upcomingFixtures
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,36 +18,35 @@ data class Fixture(
     val time: String,
     val Pitch: String,
 )
-val fixtures = listOf(Fixture("Arsenal", "Chelsea", "Fri 19 Apr", "18:00", "Pitch A"))
+
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    val teams = listOf("Team A", "Team B", "Team C", "Team D")
-    Column(modifier = modifier.fillMaxSize()) {
-        Text(
-            text = "6v6 League Planner",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            style = MaterialTheme.typography.headlineMedium
-        )
+fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
+
+    val fixtures = listOf(
+        Fixture("Arsenal", "Chelsea", "Fri 19 Apr", "18:00", "Pitch A"),
+        Fixture("Man City", "Liverpool", "Sat 20 Apr", "14:00", "Pitch B"),
+        Fixture("Wolves", "Spurs", "Sat 20 Apr", "16:00", "Pitch A"),
+        Fixture("Brighton", "Yanited", "Sun 21 Apr", "15:00", "Pitch D"),
+        Fixture("Chelsea", "Arsenal", "Fri 26 Apr", "18:00", "Pitch C"),
+        Fixture("Liverpool", "Wolves", "Sat 27 Apr", "14:00", "Pitch B"),
+        Fixture("Spurs", "Man City", "Sun 28 Apr", "16:00", "Pitch A")
+    )
+
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(12.dp)
+    ) {
 
         Text(
-            text = "Welcome",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 12.dp),
-            style = MaterialTheme.typography.headlineSmall
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Text(
-            text= "Upcoming matches",
+            text = "Upcoming Fixtures",
+            style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
+
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
@@ -111,6 +99,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center
                         )
+
                     }
                 }
             }
