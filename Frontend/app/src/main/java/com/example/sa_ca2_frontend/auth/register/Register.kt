@@ -8,6 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.sa_ca2_frontend.auth.ApiClient
+import com.example.sa_ca2_frontend.auth.AuthRequest
+import kotlinx.coroutines.launch
 
 @Composable
 fun RegisterScreen(
@@ -22,6 +25,10 @@ fun RegisterScreen(
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
+    var error by remember { mutableStateOf<String?>(null) }
+
+    val scope = rememberCoroutineScope()
+
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp)
     ) {
@@ -33,30 +40,30 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        OutlinedTextField(
-            value = userName,
-            onValueChange = { userName = it },
-            label = { Text("User Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = firstName,
-            onValueChange = { firstName = it },
-            label = { Text("First Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = lastName,
-            onValueChange = { lastName = it },
-            label = { Text("Last Name") },
-            modifier = Modifier.fillMaxWidth()
-        )
+//        OutlinedTextField(
+//            value = userName,
+//            onValueChange = { userName = it },
+//            label = { Text("User Name") },
+//            modifier = Modifier.fillMaxWidth()
+//        )
+//
+//        Spacer(modifier = Modifier.height(12.dp))
+//
+//        OutlinedTextField(
+//            value = firstName,
+//            onValueChange = { firstName = it },
+//            label = { Text("First Name") },
+//            modifier = Modifier.fillMaxWidth()
+//        )
+//
+//        Spacer(modifier = Modifier.height(12.dp))
+//
+//        OutlinedTextField(
+//            value = lastName,
+//            onValueChange = { lastName = it },
+//            label = { Text("Last Name") },
+//            modifier = Modifier.fillMaxWidth()
+//        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -92,14 +99,35 @@ fun RegisterScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        if (error != null) {
+            Text(
+                text = error!!,
+                color = MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
         Button(
             onClick = {
-                // backend logic
-                onRegisterSuccess()
+                scope.launch {
+                    try {
+                        val response = ApiClient.authApi.signup(
+                            AuthRequest(email, password)
+                        )
+
+                        if (response.isSuccessful) {
+                            onRegisterSuccess()
+                        } else {
+                            error = "Sign up failed"
+                        }
+                    } catch (e: Exception) {
+                        error = "Network error: ${e.message}"
+                    }
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Create Account")
+            Text("Signup")
         }
     }
 }

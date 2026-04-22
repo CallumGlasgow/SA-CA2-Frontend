@@ -8,6 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.example.sa_ca2_frontend.auth.ApiClient
+import com.example.sa_ca2_frontend.auth.AuthRequest
+import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(
@@ -15,8 +18,12 @@ fun LoginScreen(
     onLoginSuccess: () -> Unit
     ) {
 
-    var userName by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    var error by remember { mutableStateOf<String?>(null) }
+
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = modifier
@@ -32,9 +39,9 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = userName,
-            onValueChange = { userName = it },
-            label = { Text("User Name") },
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -51,10 +58,30 @@ fun LoginScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        if (error != null) {
+            Text(
+                text = error!!,
+                color = MaterialTheme.colorScheme.error
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+
         Button(
             onClick = {
-                // endpoint logic
-                onLoginSuccess()
+                scope.launch {
+                    try {
+                        val response = ApiClient.authApi.login(
+                            AuthRequest(email, password)
+                        )
+                        if (response.isSuccessful) {
+                            onLoginSuccess()
+                        } else {
+                            error = "Login failed"
+                        }
+                    } catch (e: Exception) {
+                        error = "Network error: ${e.message}"
+                    }
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
