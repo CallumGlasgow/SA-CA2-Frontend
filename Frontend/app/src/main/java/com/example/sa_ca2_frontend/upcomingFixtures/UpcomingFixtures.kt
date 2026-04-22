@@ -28,7 +28,6 @@ fun formatMatchDate(dateTime: String): Pair<String, String> {
 fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
 
     var fixtures by remember { mutableStateOf<List<FixtureResponse>>(emptyList()) }
-    var teams by remember { mutableStateOf<List<TeamResponse>>(emptyList()) }
     var isLoading by remember { mutableStateOf(true) }
     var error by remember { mutableStateOf<String?>(null) }
     var showAll by remember { mutableStateOf(false) }
@@ -41,7 +40,6 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
 
             if (fixtureResponse.isSuccessful && teamResponse.isSuccessful) {
                 fixtures = fixtureResponse.body().orEmpty()
-                teams = teamResponse.body().orEmpty()
             } else {
                 error = "Failed to load data"
             }
