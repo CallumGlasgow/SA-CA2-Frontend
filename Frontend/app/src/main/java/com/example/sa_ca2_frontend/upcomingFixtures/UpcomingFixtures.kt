@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import com.example.sa_ca2_frontend.leagueTable.LeaderboardApiService
-import com.example.sa_ca2_frontend.Model.TeamResponse
 
 fun formatMatchDate(dateTime: String): Pair<String, String> {
     val parts = dateTime.split("T")
