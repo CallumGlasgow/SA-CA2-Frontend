@@ -1,38 +1,43 @@
 package com.example.sa_ca2_frontend.leagueTable
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-
-data class TeamStanding(
-    val name: String,
-    val played: Int,
-    val wins: Int,
-    val draws: Int,
-    val losses: Int,
-    val points: Int
-)
+import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import com.example.sa_ca2_frontend.Model.TeamResponse
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.Alignment
 
 @Composable
 fun LeagueTableScreen(modifier: Modifier = Modifier) {
 
-    val teams = listOf(
-        TeamStanding("Arsenal", 10, 8, 1, 1, 25),
-        TeamStanding("Wolves", 10, 7, 2, 1, 23),
-        TeamStanding("Man City", 10, 6, 2, 2, 20),
-        TeamStanding("Liverpool", 10, 5, 2, 3, 17),
-        TeamStanding("Chelsea", 10, 4, 1, 5, 13),
-        TeamStanding("Yanited", 10, 3, 2, 5, 11),
-        TeamStanding("Spurs", 10, 2, 1, 7, 7),
-        TeamStanding("Brighton", 10, 1, 0, 9, 3)
-    )
+    var teams by remember { mutableStateOf<List<TeamResponse>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        try {
+            isLoading = true
+            val response = LeaderboardApiService.api.getTeams()
+
+            if (response.isSuccessful) {
+                teams = response.body() ?: emptyList()
+            } else {
+                error = "Failed to load teams"
+            }
+
+        } catch (e: Exception) {
+            error = e.message
+        }
+        isLoading = false
+    }
+
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
 
@@ -44,6 +49,38 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
         )
 
         Spacer(modifier = Modifier.height(20.dp))
+
+        if (isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+            return
+        }
+
+        if (error != null) {
+            Text(
+                text = error!!,
+                color = MaterialTheme.colorScheme.error
+            )
+            return
+        }
+
+        if (teams.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No teams found, be the first to join the league. Register a team on the settings page.",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+            return
+        }
 
         // header row
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -58,22 +95,18 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
         HorizontalDivider()
 
         LazyColumn {
-            itemsIndexed(teams) { index, team ->
 
-                val bgColor = when (index) {
-                    in 0..2 -> Color(0xFFDFF5E1) // green for top 3 (trophys?)
-                    in 5..7 -> Color(0xFFF8D7DA) // red for bottom 3 (relegation? or loser penalty?)
-                    else -> Color.Transparent
-                }
-
+            items(
+                teams.sortedByDescending { it.points }
+            ) { team ->
+                val played = team.wins + team.draws + team.losses
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(bgColor)
                         .padding(vertical = 10.dp)
                 ) {
                     Text(team.name, modifier = Modifier.weight(2f))
-                    Text("${team.played}", modifier = Modifier.weight(1f))
+                    Text("${played}", modifier = Modifier.weight(1f))
                     Text("${team.wins}", modifier = Modifier.weight(1f))
                     Text("${team.draws}", modifier = Modifier.weight(1f))
                     Text("${team.losses}", modifier = Modifier.weight(1f))
