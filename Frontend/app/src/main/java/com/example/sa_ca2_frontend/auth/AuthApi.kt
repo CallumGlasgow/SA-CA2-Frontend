@@ -3,9 +3,7 @@ package com.example.sa_ca2_frontend.auth
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import com.example.sa_ca2_frontend.network.ApiClient
 
 
 data class LoginResponse(
@@ -34,16 +32,9 @@ data class AuthRequest(
     val password: String
 )
 
-object ApiClient {
+object AuthApiService {
 
-    private const val BASE_URL = "http://10.0.2.2:5007/"
-
-    val authApi: AuthApi by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(AuthApi::class.java)
+    val api: AuthApi by lazy {
+        ApiClient.retrofit.create(AuthApi::class.java)
     }
 }

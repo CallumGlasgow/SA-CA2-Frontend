@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.sa_ca2_frontend.auth.ApiClient
+import com.example.sa_ca2_frontend.auth.AuthApiService
 import com.example.sa_ca2_frontend.auth.AuthRequest
 import kotlinx.coroutines.launch
 
@@ -75,7 +75,7 @@ fun LoginScreen(
                     }
 
                     try {
-                        val response = ApiClient.authApi.login(
+                        val response = AuthApiService.api.login(
                             AuthRequest(email, password)
                         )
                         if (response.isSuccessful) {

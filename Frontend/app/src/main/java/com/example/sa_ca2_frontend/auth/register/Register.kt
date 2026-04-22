@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
-import com.example.sa_ca2_frontend.auth.ApiClient
+import com.example.sa_ca2_frontend.auth.AuthApiService
 import com.example.sa_ca2_frontend.auth.AuthRequest
 import kotlinx.coroutines.launch
 
@@ -90,7 +90,7 @@ fun RegisterScreen(
                     }
 
                     try {
-                        val response = ApiClient.authApi.signup(
+                        val response = AuthApiService.api.signup(
                             AuthRequest(email, password)
                         )
 
