@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.example.sa_ca2_frontend.Model.User
 
 data class Fixture(
     val homeTeam: String,
@@ -31,7 +32,10 @@ data class Fixture(
 )
 val fixtures = listOf(Fixture("Arsenal", "Chelsea", "Fri 19 Apr", "18:00", "Pitch A"))
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    user: User
+) {
     val teams = listOf("Team A", "Team B", "Team C", "Team D")
     Column(modifier = modifier.fillMaxSize()) {
         Text(
@@ -43,7 +47,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         )
 
         Text(
-            text = "Welcome",
+            text = if (user.email.isNotBlank()) "Welcome ${user.email}" else "Welcome Guest",
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),

@@ -17,10 +17,6 @@ fun RegisterScreen(
     modifier: Modifier = Modifier,
     onRegisterSuccess: () -> Unit
 ) {
-
-    var userName by remember { mutableStateOf("") }
-    var firstName by remember { mutableStateOf("") }
-    var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -37,33 +33,6 @@ fun RegisterScreen(
             text = "Sign Up",
             style = MaterialTheme.typography.headlineMedium
         )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-//        OutlinedTextField(
-//            value = userName,
-//            onValueChange = { userName = it },
-//            label = { Text("User Name") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//
-//        OutlinedTextField(
-//            value = firstName,
-//            onValueChange = { firstName = it },
-//            label = { Text("First Name") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(12.dp))
-//
-//        OutlinedTextField(
-//            value = lastName,
-//            onValueChange = { lastName = it },
-//            label = { Text("Last Name") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
 
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -110,6 +79,16 @@ fun RegisterScreen(
         Button(
             onClick = {
                 scope.launch {
+                    if (email.isBlank() || password.isBlank()) {
+                        error = "Email and password cannot be empty"
+                        return@launch
+                    }
+
+                    if (password != confirmPassword) {
+                        error = "Passwords do not match"
+                        return@launch
+                    }
+
                     try {
                         val response = ApiClient.authApi.signup(
                             AuthRequest(email, password)

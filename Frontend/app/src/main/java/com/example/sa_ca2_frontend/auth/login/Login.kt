@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
-    onLoginSuccess: () -> Unit
+    onLoginSuccess: (String, Int) -> Unit
     ) {
 
     var email by remember { mutableStateOf("") }
@@ -69,14 +69,27 @@ fun LoginScreen(
         Button(
             onClick = {
                 scope.launch {
+                    if (email.isBlank() || password.isBlank()) {
+                        error = "Email and password cannot be empty"
+                        return@launch
+                    }
+
                     try {
                         val response = ApiClient.authApi.login(
                             AuthRequest(email, password)
                         )
                         if (response.isSuccessful) {
-                            onLoginSuccess()
+                            val body = response.body()
+                            if (body != null) {
+                                val userEmail = body.user.email
+                                val userId = body.user.id
+
+                                onLoginSuccess(userEmail, userId)
+                            } else {
+                                error = "Empty response"
+                            }
                         } else {
-                            error = "Login failed"
+                            error = "Login failed: ${response.message()}"
                         }
                     } catch (e: Exception) {
                         error = "Network error: ${e.message}"

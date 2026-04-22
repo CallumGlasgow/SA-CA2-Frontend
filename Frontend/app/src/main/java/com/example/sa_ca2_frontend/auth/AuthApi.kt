@@ -9,7 +9,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
 data class LoginResponse(
-    val message: String
+    val message: String,
+    val user: User
+)
+data class User(
+    val id: Int,
+    val email: String
 )
 data class SignupResponse(
     val message: String
@@ -19,10 +24,10 @@ data class SignupResponse(
 interface AuthApi {
 
     @POST("api/Auth/signup")
-    suspend fun signup(@Body request: AuthRequest): Response<String>
+    suspend fun signup(@Body request: AuthRequest): Response<SignupResponse>
 
     @POST("api/Auth/login")
-    suspend fun login(@Body request: AuthRequest): Response<SignupResponse>
+    suspend fun login(@Body request: AuthRequest): Response<LoginResponse>
 }
 data class AuthRequest(
     val email: String,
