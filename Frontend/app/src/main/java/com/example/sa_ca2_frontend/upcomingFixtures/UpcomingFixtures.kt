@@ -10,33 +10,74 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
+import com.example.sa_ca2_frontend.leagueTable.LeaderboardApiService
+import com.example.sa_ca2_frontend.Model.TeamResponse
 
-data class Fixture(
-    val homeTeam: String,
-    val awayTeam: String,
-    val date: String,
-    val time: String,
-    val Pitch: String,
-)
+fun formatMatchDate(dateTime: String): Pair<String, String> {
+    val parts = dateTime.split("T")
+    val date = parts[0] // 2026-04-23
+    val time = parts[1].take(5)
+
+    return date to time
+}
 
 @Composable
 fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
 
-    val fixtures = listOf(
-        Fixture("Arsenal", "Chelsea", "Fri 19 Apr", "18:00", "Pitch A"),
-        Fixture("Man City", "Liverpool", "Sat 20 Apr", "14:00", "Pitch B"),
-        Fixture("Wolves", "Spurs", "Sat 20 Apr", "16:00", "Pitch A"),
-        Fixture("Brighton", "Yanited", "Sun 21 Apr", "15:00", "Pitch D"),
-        Fixture("Chelsea", "Arsenal", "Fri 26 Apr", "18:00", "Pitch C"),
-        Fixture("Liverpool", "Wolves", "Sat 27 Apr", "14:00", "Pitch B"),
-        Fixture("Spurs", "Man City", "Sun 28 Apr", "16:00", "Pitch A")
-    )
+    var fixtures by remember { mutableStateOf<List<FixtureResponse>>(emptyList()) }
+    var teams by remember { mutableStateOf<List<TeamResponse>>(emptyList()) }
+    var isLoading by remember { mutableStateOf(true) }
+    var error by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(Unit) {
+        try {
+            val fixtureResponse = FixtureApiService.api.getFixtures()
+            val teamResponse = LeaderboardApiService.api.getTeams()
+
+            if (fixtureResponse.isSuccessful && teamResponse.isSuccessful) {
+                fixtures = fixtureResponse.body().orEmpty()
+                teams = teamResponse.body().orEmpty()
+            } else {
+                error = "Failed to load data"
+            }
+
+        } catch (e: Exception) {
+            error = e.message
+        }
+
+        isLoading = false
+    }
+
+    fun getTeamName(id: Int): String {
+        return teams.find { it.id == id }?.name ?: "Unknown"
+    }
+
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(12.dp)
     ) {
+
+        if (isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+            return
+        }
+
+        if (error != null) {
+            Text(
+                text = error!!,
+                color = MaterialTheme.colorScheme.error
+            )
+            return
+        }
 
         Text(
             text = "Upcoming Fixtures",
@@ -53,6 +94,9 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
             items(fixtures) { fixture ->
 
                 Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color(0xFFBBDEFB) // light blue might be too bright?
+                    ),
                     elevation = CardDefaults.cardElevation(defaultElevation = 3.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
@@ -66,7 +110,7 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
                             Text(
-                                text = fixture.homeTeam,
+                                text = fixture.homeTeam.name,
                                 fontWeight = FontWeight.SemiBold
                             )
 
@@ -76,26 +120,25 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
                             )
 
                             Text(
-                                text = fixture.awayTeam,
+                                text = fixture.awayTeam.name,
                                 fontWeight = FontWeight.SemiBold
                             )
                         }
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        // time row
-                        Row(
+                        val (date, time) = formatMatchDate(fixture.matchDate)
+                        Text(
+                            text = time + "    " + date,
+                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(text = fixture.date)
-                            Text(text = fixture.time, fontWeight = FontWeight.Bold)
-                        }
+                            textAlign = TextAlign.Center
+                        )
 
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = fixture.Pitch,
+                            text = "Pitch: ${fixture.pitch.name}",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center
                         )
