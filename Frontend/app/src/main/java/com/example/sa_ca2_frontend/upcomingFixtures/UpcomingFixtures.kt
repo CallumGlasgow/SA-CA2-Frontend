@@ -34,13 +34,18 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
 
     LaunchedEffect(Unit) {
         try {
-            val fixtureResponse = FixtureApiService.api.getFixtures()
+            val getFixtures = FixtureApiService.api.generateFixtures(10)
             val teamResponse = LeaderboardApiService.api.getTeams()
 
-            if (fixtureResponse.isSuccessful && teamResponse.isSuccessful) {
-                fixtures = fixtureResponse.body().orEmpty()
+            if (getFixtures.isSuccessful && teamResponse.isSuccessful) {
+                val fixtureResponse = FixtureApiService.api.getFixtures()
+                if (fixtureResponse.isSuccessful) {
+                    fixtures = fixtureResponse.body().orEmpty()
+                } else {
+                    error = "Could not fetch new fixtures"
+                }
             } else {
-                error = "Failed to load data"
+                error = "Could not generate fixtures or load teams"
             }
 
         } catch (e: Exception) {
