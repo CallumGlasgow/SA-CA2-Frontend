@@ -13,6 +13,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import com.example.sa_ca2_frontend.R
 import com.example.sa_ca2_frontend.leagueTable.LeaderboardApiService
 
 fun formatMatchDate(dateTime: String): Pair<String, String> {
@@ -80,7 +82,7 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
         }
 
         Text(
-            text = "Upcoming Fixtures",
+            text = stringResource(id = R.string.FixtureTitle),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -107,7 +109,7 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
                             modifier = Modifier.padding(bottom = 8.dp)
                         ) {
                             Text(
-                                text = "FIXTURE",
+                                text = stringResource(id = R.string.FixtureSurface),
                                 color = Color.White,
                                 style = MaterialTheme.typography.labelSmall,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)
@@ -166,7 +168,7 @@ fun UpcomingFixturesScreen(modifier: Modifier = Modifier) {
                         onClick = { showAll = !showAll },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("View More")
+                        Text(stringResource(id = R.string.FixtureViewMore))
                     }
                 }
             }

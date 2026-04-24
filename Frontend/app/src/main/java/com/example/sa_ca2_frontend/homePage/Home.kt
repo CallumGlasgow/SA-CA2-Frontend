@@ -45,6 +45,8 @@ import com.example.sa_ca2_frontend.upcomingFixtures.FixtureApiService
 import com.example.sa_ca2_frontend.upcomingFixtures.FixtureResponse
 import com.example.sa_ca2_frontend.upcomingFixtures.formatMatchDate
 import kotlin.collections.orEmpty
+import androidx.compose.ui.res.stringResource
+import com.example.sa_ca2_frontend.R
 
 val gold = Color(0xFFFFD700)
 val silver = Color(0xFFC0C0C0)
@@ -66,6 +68,9 @@ fun HomeScreen(
 
     var isLoadingTeams by remember { mutableStateOf(true) }
     var isErrorTeams by remember { mutableStateOf<String?>(null) }
+
+    val welcomeName = if (user.email.isNotBlank()) user.email else "Guest"
+    val welcomeText = stringResource(id = R.string.HomePageWelcome, welcomeName)
 
 
     LaunchedEffect(Unit) {
@@ -110,7 +115,7 @@ fun HomeScreen(
 
     Column(modifier = modifier.fillMaxSize()) {
         Text(
-            text = "Peamount 6v6 League",
+            text = stringResource(id = R.string.HomePageTitle),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
@@ -119,7 +124,7 @@ fun HomeScreen(
         )
 
         Text(
-            text = if (user.email.isNotBlank()) "Welcome ${user.email}" else "Welcome Guest",
+            text = welcomeText,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 12.dp),
@@ -132,7 +137,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text= "Next Match, Dont miss out!",
+            text= stringResource(id = R.string.HomePageInfo),
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
@@ -168,7 +173,7 @@ fun HomeScreen(
                                 modifier = Modifier.padding(bottom = 8.dp)
                             ) {
                                 Text(
-                                    text = "FIXTURE",
+                                    text = stringResource(id = R.string.FixtureSurface),
                                     color = Color.White,
                                     style = MaterialTheme.typography.labelSmall,
                                     modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp)

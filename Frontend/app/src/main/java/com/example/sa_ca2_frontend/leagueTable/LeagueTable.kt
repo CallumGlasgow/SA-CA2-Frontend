@@ -47,7 +47,7 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
     ) {
 
         Text(
-            text = "League Table",
+            text = stringResource(id = R.string.LeaderboardTitle),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -92,7 +92,7 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
 
         
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text("Team", modifier = Modifier.weight(2f))
+            Text(stringResource(id = R.string.LeaderboardTeamHeading), modifier = Modifier.weight(2f))
             Text("P", modifier = Modifier.weight(1f))
             Text("W", modifier = Modifier.weight(1f))
             Text("D", modifier = Modifier.weight(1f))

@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.res.stringResource
+import com.example.sa_ca2_frontend.R
 import kotlinx.coroutines.launch
 
 @Composable
@@ -25,7 +27,7 @@ fun CreateTeamScreen(
     ) {
 
         Text(
-            text = "Create Team",
+            text = stringResource(id = R.string.CreateTeamTitle),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -39,7 +41,7 @@ fun CreateTeamScreen(
                 teamName = it
                 error = null
                             },
-            label = { Text("Team Name") },
+            label = { Text(stringResource(id = R.string.CreateTeamTextLabl)) },
             modifier = Modifier.fillMaxWidth()
         )
         if (error != null) {
@@ -82,7 +84,7 @@ fun CreateTeamScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Create Team")
+            Text(stringResource(id = R.string.CreateTeamButton))
         }
     }
 }
