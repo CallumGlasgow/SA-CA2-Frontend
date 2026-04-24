@@ -21,11 +21,22 @@ import com.example.sa_ca2_frontend.ui.theme.SACA2FrontendTheme
 import androidx.compose.runtime.* // dup#
 import androidx.compose.runtime.mutableIntStateOf
 import com.example.sa_ca2_frontend.Model.User
+//import java.util.*
+//import android.content.res.Configuration
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // hard code to spanish as emulator crashes on settings page
+//        val locale = Locale("es")
+//        Locale.setDefault(locale)
+//        val config = Configuration()
+//        config.setLocale(locale)
+//        resources.updateConfiguration(config, resources.displayMetrics)
+
         setContent {
             SACA2FrontendTheme {
                 var selectedTab by remember { mutableIntStateOf(0) }

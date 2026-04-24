@@ -10,9 +10,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.runtime.LaunchedEffect
 import com.example.sa_ca2_frontend.Model.TeamResponse
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.background
+import androidx.compose.ui.res.stringResource
+import com.example.sa_ca2_frontend.R
 
 @Composable
 fun LeagueTableScreen(modifier: Modifier = Modifier) {
@@ -38,11 +42,14 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
         isLoading = false
     }
 
-
-    Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
 
         Text(
-            text = "League Table",
+            text = stringResource(id = R.string.LeaderboardTitle),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
@@ -82,9 +89,12 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
             return
         }
 
-        // header row
+
+        val sortedTeams = teams.sortedByDescending { it.points }
+
+
         Row(modifier = Modifier.fillMaxWidth()) {
-            Text("Team", modifier = Modifier.weight(2f))
+            Text(stringResource(id = R.string.LeaderboardTeamHeading), modifier = Modifier.weight(2f))
             Text("P", modifier = Modifier.weight(1f))
             Text("W", modifier = Modifier.weight(1f))
             Text("D", modifier = Modifier.weight(1f))
@@ -95,18 +105,24 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
         HorizontalDivider()
 
         LazyColumn {
+            itemsIndexed(sortedTeams) { index, team ->
 
-            items(
-                teams.sortedByDescending { it.points }
-            ) { team ->
                 val played = team.wins + team.draws + team.losses
+
+                val backgroundColor = when {
+                    index < 3 -> Color(0xFFB9F6CA)
+                    index == sortedTeams.lastIndex -> Color(0xFFFFCDD2)
+                    else -> Color.Transparent
+                }
+
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .background(backgroundColor)
                         .padding(vertical = 10.dp)
                 ) {
                     Text(team.name, modifier = Modifier.weight(2f))
-                    Text("${played}", modifier = Modifier.weight(1f))
+                    Text("$played", modifier = Modifier.weight(1f))
                     Text("${team.wins}", modifier = Modifier.weight(1f))
                     Text("${team.draws}", modifier = Modifier.weight(1f))
                     Text("${team.losses}", modifier = Modifier.weight(1f))

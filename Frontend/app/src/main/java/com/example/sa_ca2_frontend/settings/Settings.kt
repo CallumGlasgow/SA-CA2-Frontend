@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.sa_ca2_frontend.Model.User
+import com.example.sa_ca2_frontend.R
 
 @Composable
 fun SettingsScreen(
@@ -18,6 +20,9 @@ fun SettingsScreen(
     isLoggedIn: Boolean,
     user: User,
     ) {
+
+    val LoginText = stringResource(id = R.string.SettingsLoggedInAs, user.email)
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -25,7 +30,7 @@ fun SettingsScreen(
     ) {
 
         Text(
-            text = "Settings",
+            text = stringResource(id = R.string.SettingsTitle),
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -33,13 +38,13 @@ fun SettingsScreen(
 
         if (isLoggedIn) {
             Text(
-                text = "Logged in as:  ${user.email}",
+                text = LoginText,
                 style = MaterialTheme.typography.bodyMedium,
             )
             HorizontalDivider()
 
             Text(
-                text = "Register a Team",
+                text = stringResource(id = R.string.SettingsRegisterTeam),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onNavigateToCreateTeam() }
@@ -50,7 +55,7 @@ fun SettingsScreen(
             HorizontalDivider()
 
             Text(
-                text = "Logout",
+                text = stringResource(id = R.string.SettingsLogout),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { onLogout() }
@@ -59,7 +64,7 @@ fun SettingsScreen(
             )
         } else {
             Text(
-            text = "Sign Up",
+            text = stringResource(id = R.string.SettingsSignup),
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onNavigateToRegister() }
@@ -70,7 +75,7 @@ fun SettingsScreen(
         HorizontalDivider()
 
         Text(
-            text = "Login",
+            text = stringResource(id = R.string.SettingsLogin),
             modifier = Modifier
                 .fillMaxWidth()
                 .clickable { onNavigateToLogin() }

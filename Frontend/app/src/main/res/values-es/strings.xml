@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SA-CA2-Frontal</string>
+    <string name="HomePageTitle">Liga Peamount 6v6</string>
+    <string name="HomePageWelcome">Bienvenido %1$s</string>
+    <string name="HomePage">Bienvenido</string>
+    <string name="HomePageInfo">Bienvenido</string>
+
+    <string name="navbarHome">Inicio</string>
+    <string name="navbarLeaderboard">Clasificación</string>
+    <string name="nvabarFixture">Partidos</string>
+    <string name="navbarSettings">Configuración</string>
+
+    <string name="LeaderboardTitle">Liga</string>
+    <string name="LeaderboardTeamHeading">Tabla</string>
+
+    <string name="FixtureTitle">Próximos partidos</string>
+    <string name="FixtureViewMore">Tabla</string>
+    <string name="FixtureSurface">PARTIDO</string>
+
+    <string name="SettingsTitle">Configuración</string>
+    <string name="SettingsLogin">Iniciar sesión</string>
+    <string name="SettingsSignup">Registrarse</string>
+    <string name="SettingsLoggedInAs">Conectado como: %1$s</string>
+    <string name="SettingsRegisterTeam">Registrar un equipo</string>
+    <string name="SettingsLogout">Cerrar sesión</string>
+
+    <string name="CreateTeamTitle">Crear equipo</string>
+    <string name="CreateTeamTextLabl">Nombre del equipo</string>
+    <string name="CreateTeamButton">Crear equipo</string>
+
+    <string name="LoginTitle">Iniciar sesión</string>
+    <string name="LoginEmail">Correo electrónico</string>
+    <string name="LoginPassword">Contraseña</string>
+    <string name="LoginButton">Iniciar sesión</string>
+
+    <string name="RegisterTitle">Registrarse</string>
+    <string name="RegisterEmail">Correo electrónico</string>
+    <string name="RegisterPassword">Contraseña</string>
+    <string name="RegisterPasswordConfirm">Confirmar contraseña</string>
+    <string name="RegisterButton">Registrarse</string>
+
+</resources>

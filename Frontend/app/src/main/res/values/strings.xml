@@ -1,3 +1,42 @@
 <resources>
     <string name="app_name">SA-CA2-Frontend</string>
+    <string name="HomePageTitle">Peamount 6v6 League</string>
+    <string name="HomePageWelcome">Welcome %1$s</string>
+    <string name="HomePage">Welcome</string>
+    <string name="HomePageInfo">Welcome</string>
+
+    <string name="navbarHome">Home</string>
+    <string name="navbarLeaderboard">Leaderboard</string>
+    <string name="nvabarFixture">Fixtures</string>
+    <string name="navbarSettings">Settings</string>
+
+    <string name="LeaderboardTitle">League Table</string>
+    <string name="LeaderboardTeamHeading">Table</string>
+
+    <string name="FixtureTitle">Upcoming Fixtures</string>
+    <string name="FixtureViewMore">Table</string>
+    <string name="FixtureSurface">FIXTURE</string>
+
+    <string name="SettingsTitle">Settings</string>
+    <string name="SettingsLogin">Login</string>
+    <string name="SettingsSignup">Signup</string>
+    <string name="SettingsLoggedInAs">Logged in as: %1$s</string>
+    <string name="SettingsRegisterTeam">Register a Team</string>
+    <string name="SettingsLogout">Logout</string>
+
+    <string name="CreateTeamTitle">Create Team</string>
+    <string name="CreateTeamTextLabl">Team Name</string>
+    <string name="CreateTeamButton">Create Team</string>
+
+    <string name="LoginTitle">Login</string>
+    <string name="LoginEmail">Email</string>
+    <string name="LoginPassword">Password</string>
+    <string name="LoginButton">Login</string>
+
+    <string name="RegisterTitle">Sign Up</string>
+    <string name="RegisterEmail">Email</string>
+    <string name="RegisterPassword">Password</string>
+    <string name="RegisterPasswordConfirm">Confirm Password</string>
+    <string name="RegisterButton">Sign up</string>
+
 </resources>

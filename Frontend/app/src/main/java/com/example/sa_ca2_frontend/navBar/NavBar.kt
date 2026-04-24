@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.ui.res.stringResource
+import com.example.sa_ca2_frontend.R
 
 @Composable
 fun BottomNavBar(
@@ -29,7 +31,8 @@ fun BottomNavBar(
                     contentDescription = "Home"
                 )
             },
-            label = { Text("Home") }
+            label = { Text(stringResource(id = R.string.navbarHome)) }
+
         )
 
         NavigationBarItem(
@@ -41,7 +44,7 @@ fun BottomNavBar(
                     contentDescription = "Teams leaderboard"
                 )
             },
-            label = { Text("Leaderboard") }
+            label = { Text(stringResource(id = R.string.navbarLeaderboard)) }
         )
 
         NavigationBarItem(
@@ -53,7 +56,7 @@ fun BottomNavBar(
                     contentDescription = "Fixtures"
                 )
             },
-            label = { Text("Fixtures") }
+            label = { Text(stringResource(id = R.string.nvabarFixture)) }
         )
 
         NavigationBarItem(
@@ -65,7 +68,7 @@ fun BottomNavBar(
                     contentDescription = "Settings"
                 )
             },
-            label = { Text("Settings") }
+            label = { Text(stringResource(id = R.string.navbarSettings)) }
         )
     }
 }
