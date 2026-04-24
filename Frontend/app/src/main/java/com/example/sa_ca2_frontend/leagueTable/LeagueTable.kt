@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.foundation.background
-import androidx.compose.ui.res.stringResource
-import com.example.sa_ca2_frontend.R
 
 @Composable
 fun LeagueTableScreen(modifier: Modifier = Modifier) {
@@ -89,10 +87,10 @@ fun LeagueTableScreen(modifier: Modifier = Modifier) {
             return
         }
 
-
+        
         val sortedTeams = teams.sortedByDescending { it.points }
 
-
+        
         Row(modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(id = R.string.LeaderboardTeamHeading), modifier = Modifier.weight(2f))
             Text("P", modifier = Modifier.weight(1f))
